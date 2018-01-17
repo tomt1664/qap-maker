@@ -1,22 +1,28 @@
+/*************************************************************************************
+** QAPMaker: An interactive tool for developing simple Quadratic Arithmetic Programs
+**
+** Built using Qt 5.6
+**
+** Tom Trevethan 2017
+** tptrevethan@googlemail.com
+**************************************************************************************/
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
-namespace Ui {
-class MainWindow;
-}
+#include <QWidget>
+#include <QtWidgets>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+
 };
 
 #endif // MAINWINDOW_H
