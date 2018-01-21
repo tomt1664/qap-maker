@@ -7,30 +7,27 @@
 ** tptrevethan@googlemail.com
 **************************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include "cprog.h"
 
 #include <QMainWindow>
 #include <QWidget>
 #include <QtWidgets>
 
-class CProgram;
-class FlatProgram;
-
-class MainWindow : public QMainWindow
+CProgram::CProgram(QWidget *parent)
+    : QWidget(parent)
 {
-    Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = 0);
+    QVBoxLayout *cLayout = new QVBoxLayout;
 
-private:
-    void setupMenus();
-    void setupWidgets();
+    cProgEdit = new QTextEdit;
+    cProgEdit->setReadOnly(true);
+    cProgEdit->setBackgroundRole(QPalette::NoRole);
+    cProgEdit->setMaximumWidth(210);
+    cProgEdit->append("Hello");
 
-    CProgram *cProg;
-    FlatProgram *flatProg;
+    cLayout->addWidget(cProgEdit);
 
-};
+    QWidget *cWidget = new QWidget;
+    cWidget->setLayout(cLayout);
 
-#endif // MAINWINDOW_H
+}

@@ -7,30 +7,31 @@
 ** tptrevethan@googlemail.com
 **************************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CPROG
+#define CPROG
 
-#include <QMainWindow>
 #include <QWidget>
-#include <QtWidgets>
+#include <QTextEdit>
 
-class CProgram;
-class FlatProgram;
-
-class MainWindow : public QMainWindow
+class CProgram : public QWidget  // QWidget class for the main c program field
 {
     Q_OBJECT
 
+    QSize size() const Q_DECL_OVERRIDE;
+
+
 public:
-    MainWindow(QWidget *parent = 0);
+
+    CProgram(QWidget *parent = 0);
+
+public slots:
+
+protected:
 
 private:
-    void setupMenus();
-    void setupWidgets();
 
-    CProgram *cProg;
-    FlatProgram *flatProg;
-
+    QTextEdit *cProgEdit;
 };
 
-#endif // MAINWINDOW_H
+#endif // CPROG
+

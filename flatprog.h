@@ -7,30 +7,28 @@
 ** tptrevethan@googlemail.com
 **************************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef FLATPROG
+#define FLATPROG
 
-#include <QMainWindow>
 #include <QWidget>
-#include <QtWidgets>
 
-class CProgram;
-class FlatProgram;
-
-class MainWindow : public QMainWindow
+class FlatProgram : public QWidget  // QWidget class for the flattened program field
 {
     Q_OBJECT
 
+    QSize size() const Q_DECL_OVERRIDE;
+
 public:
-    MainWindow(QWidget *parent = 0);
+
+    FlatProgram(QWidget *parent = 0);
+
+public slots:
+
+protected:
 
 private:
-    void setupMenus();
-    void setupWidgets();
-
-    CProgram *cProg;
-    FlatProgram *flatProg;
 
 };
 
-#endif // MAINWINDOW_H
+#endif // FLATPROG
+
