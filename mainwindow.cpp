@@ -10,6 +10,8 @@
 #include "mainwindow.h"
 #include "cprog.h"
 #include "flatprog.h"
+#include "circuitscene.h"
+#include "qcustomplot.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -17,10 +19,65 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setupMenus();
-    setupWidgets();
 
-    setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+//    setupMenus();
+//    setupWidgets();
+
+    scene = new CircuitScene(gateMenu, wireMenu, xcell, ycell, this);
+    scene->setSceneRect(QRectF(0, 0, xcell, ycell));
+    scene->setBackgroundBrush(Qt::lightGray);
+
+    //connect to configscene for selection/deselection signals
+    connect(scene, SIGNAL(itemSelected(QGraphicsItem*)),
+                this, SLOT(itemSelected(QGraphicsItem*)));
+    connect(scene, SIGNAL(itemdeSelected(QGraphicsItem*)),
+                this, SLOT(itemdeSelected(QGraphicsItem*)));
+
+    //draw the simulation cell white on the gray background
+    cell = new QGraphicsRectItem;
+    cell->setRect(0, 0, xcell, ycell);
+    cell->setBrush(Qt::white);
+    cell->setZValue(-2000);
+    scene->addItem(cell);
+
+    //add slider to the right of qgraphicsview for zooming
+    zoomSlider = new QSlider;
+    zoomSlider->setMinimum(0);
+    zoomSlider->setMaximum(500);
+    zoomSlider->setValue(200);
+
+
+    QVBoxLayout *progLayout = new QVBoxLayout;
+
+
+    cPEdit = new QTextEdit;
+    cPEdit->setMaximumWidth(210);
+
+    fPEdit = new QTextEdit;
+    fPEdit->setMaximumWidth(210);
+
+    progLayout->addWidget(cPEdit);
+    progLayout->addSpacing(15);
+    progLayout->addWidget(fPEdit);
+    progLayout->addStretch(0);
+
+    QWidget *progWidget = new QWidget;
+    progWidget->setLayout(progLayout);
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(progWidget);
+    view = new QGraphicsView(scene);
+    view->setRenderHint(QPainter::Antialiasing);
+    layout->addWidget(view);
+    layout->addWidget(zoomSlider);
+
+    connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
+    setupMatrix();
+
+    QWidget *widget = new QWidget;
+    widget->setLayout(layout);
+
+    setCentralWidget(widget);
     setWindowTitle(tr("QAPMaker"));
 }
 
@@ -55,4 +112,14 @@ void MainWindow::setupWidgets()
     frameLayout->addWidget(cProg);
     frameLayout->addWidget(flatProg);
     setCentralWidget(frame);
+}
+
+void MainWindow::setupMatrix()
+{
+    qreal scale = qPow(qreal(2), (zoomSlider->value() - 250) / qreal(50));
+
+    QMatrix matrix;
+    matrix.scale(scale, scale);
+
+    view->setMatrix(matrix);
 }

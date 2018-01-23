@@ -16,6 +16,24 @@
 
 class CProgram;
 class FlatProgram;
+class CircuitScene;
+
+QT_BEGIN_NAMESPACE
+class QAction;
+class QToolBox;
+class QSpinBox;
+class QComboBox;
+class QFontComboBox;
+class QButtonGroup;
+class QLineEdit;
+class QGraphicsTextItem;
+class QFont;
+class QToolButton;
+class QAbstractButton;
+class QGraphicsView;
+class QSlider;
+QT_END_NAMESPACE
+class CurveDisplay;
 
 class MainWindow : public QMainWindow
 {
@@ -24,6 +42,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
 
+private slots:
+    void setupMatrix();
+
 private:
     void setupMenus();
     void setupWidgets();
@@ -31,6 +52,21 @@ private:
     CProgram *cProg;
     FlatProgram *flatProg;
 
+    //mainwindow components
+    QGraphicsRectItem *cell;
+    CircuitScene *scene;
+    QGraphicsView *view;
+    QSlider *zoomSlider;
+
+    //periodic images
+    int xcell; // x cell dimension
+    int ycell; // y cell dimension
+
+    QTextEdit *cPEdit;
+    QTextEdit *fPEdit;
+
+    QMenu *gateMenu;
+    QMenu *wireMenu;
 };
 
 #endif // MAINWINDOW_H

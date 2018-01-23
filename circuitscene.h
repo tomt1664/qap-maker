@@ -31,17 +31,17 @@ class CircuitScene : public QGraphicsScene
 public:
     enum Mode { InsertUSite, InsertSite, InsertTrans, MoveItem };
 
-    explicit ConfigScene(QMenu *gateMenu, QMenu *wireMenu,int xc, int yc, QObject *parent = 0);
+    explicit CircuitScene(QMenu *gateMenu, QMenu *wireMenu,int xc, int yc, QObject *parent = 0);
 
-    void addSite(bool ostate, double en, double xc, double yc, int sindx, int xrep, int yrep,
-             double m1, double m2, double m3, double m4, double m5, double m6);
-    void addTrans(Site *myStartItem, Site *myEndItem, double nbar, int id, double startPF, double endPF);
-    void addTransPair(Site *myStartItem1, Site *myEndItem1,Site *myStartItem2, Site *myEndItem2, double nbar);
+//    void addSite(bool ostate, double en, double xc, double yc, int sindx, int xrep, int yrep,
+//             double m1, double m2, double m3, double m4, double m5, double m6);
+//    void addTrans(Site *myStartItem, Site *myEndItem, double nbar, int id, double startPF, double endPF);
+//    void addTransPair(Site *myStartItem1, Site *myEndItem1,Site *myStartItem2, Site *myEndItem2, double nbar);
 
-    int getGridSize() const { return this->gridSize; }
-    bool getSnap() { return this->snap; }
-    void setSnap(bool dosnap) { snap = dosnap; }
-    void changeCell(int xcelln, int ycelln) { xcell = xcelln; ycell = ycelln; }
+//    int getGridSize() const { return this->gridSize; }
+//    bool getSnap() { return this->snap; }
+//    void setSnap(bool dosnap) { snap = dosnap; }
+//    void changeCell(int xcelln, int ycelln) { xcell = xcelln; ycell = ycelln; }
 
 //    void setTransMin1(double energy);
 //    void setTransMin2(double energy);
@@ -52,16 +52,16 @@ public:
 //    void setEndPreFac(double pf);
 
 public slots:
-    void setMode(Mode mode);
+//    void setMode(Mode mode);
 
 signals:
     void itemSelected(QGraphicsItem *item);
     void itemdeSelected(QGraphicsItem *item);
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
+//    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
+//    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
+//    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
 
 private:
     bool isItemChange(int type);
