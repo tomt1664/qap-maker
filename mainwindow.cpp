@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     setupMenus();
 //    setupWidgets();
 
-    scene = new CircuitScene(gateMenu, wireMenu, 400, 400, this);
-    scene->setSceneRect(QRectF(0, 0, 400, 400));
+    scene = new CircuitScene(gateMenu, wireMenu, 800, 800, this);
+    scene->setSceneRect(QRectF(0, 0, 800, 800));
     scene->setBackgroundBrush(Qt::lightGray);
 
     //connect to configscene for selection/deselection signals
@@ -56,21 +56,48 @@ MainWindow::MainWindow(QWidget *parent)
     rotateSlider->setValue(0);
 
 
-
-
     QVBoxLayout *progLayout = new QVBoxLayout;
 
+    QHBoxLayout *cProgBar = new QHBoxLayout;
+    QLabel *cProgLabel = new QLabel(tr("C Program"));
+    cProgBar->addWidget(cProgLabel);
 
-    cPEdit = new QTextEdit;
-    cPEdit->setMaximumWidth(210);
+    QHBoxLayout *fProgBar = new QHBoxLayout;
+    QLabel *fProgLabel = new QLabel(tr("Flattened Program"));
+    fProgBar->addWidget(fProgLabel);
 
+    QHBoxLayout *progInputBar = new QHBoxLayout;
+    QLabel *progInputLabel = new QLabel(tr("Input"));
+    progInputBar->addWidget(progInputLabel);
 
-    fPEdit = new QTextEdit;
-    fPEdit->setMaximumWidth(210);
+    QLabel *progOutputLabel = new QLabel(tr("Ouput"));
 
-    progLayout->addWidget(cPEdit);
+    cProgEdit = new QTextEdit;
+    cProgEdit->setMinimumWidth(320);
+    cProgEdit->setMaximumWidth(320);
+    cProgEdit->setMinimumHeight(260);
+    cProgEdit->setMaximumHeight(260);
+
+    fProgEdit = new QTextEdit;
+    fProgEdit->setMinimumWidth(320);
+    fProgEdit->setMaximumWidth(320);
+    fProgEdit->setMinimumHeight(260);
+    fProgEdit->setMaximumHeight(260);
+
+    progInputEdit = new QTextEdit;
+    progOutputEdit = new QTextEdit;
+
+    progLayout->addLayout(cProgBar);
+    progLayout->addWidget(cProgEdit);
     progLayout->addSpacing(15);
-    progLayout->addWidget(fPEdit);
+    progLayout->addLayout(fProgBar);
+    progLayout->addWidget(fProgEdit);
+    progLayout->addSpacing(15);
+    progLayout->addLayout(progInputBar);
+    progLayout->addWidget(progInputEdit);
+    progLayout->addSpacing(15);
+    progLayout->addWidget(progOutputLabel);
+    progLayout->addWidget(progOutputEdit);
     progLayout->addStretch(0);
 
     QWidget *progWidget = new QWidget;
@@ -79,9 +106,14 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(progWidget);
 
+    QHBoxLayout *circuitBar = new QHBoxLayout;
+    QLabel *circuitLabel = new QLabel(tr("Circuit"));
+    circuitBar->addWidget(circuitLabel);
+
     QVBoxLayout *viewLayout = new QVBoxLayout;
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
+    viewLayout->addLayout(circuitBar);
     viewLayout->addWidget(zoomSlider);
     viewLayout->addWidget(view);
     viewLayout->addWidget(rotateSlider);

@@ -65,8 +65,10 @@ private:
     int xcell; // x cell dimension
     int ycell; // y cell dimension
 
-    QTextEdit *cPEdit;
-    QTextEdit *fPEdit;
+    QTextEdit *cProgEdit;
+    QTextEdit *fProgEdit;
+    QTextEdit *progInputEdit;
+    QTextEdit *progOutputEdit;
 
     QMenu *gateMenu;
     QMenu *wireMenu;
