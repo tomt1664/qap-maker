@@ -26,7 +26,6 @@ CircuitScene::CircuitScene(QMenu *gateMenu, QMenu *wireMenu, int xc, int yc, QOb
     myLineColor = Qt::black;
     xcell = xc;
     ycell = yc;
-    indx = 1;
     snap = false;
 }
 

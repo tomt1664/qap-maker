@@ -20,11 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
 
-//    setupMenus();
+    setupMenus();
 //    setupWidgets();
 
-    scene = new CircuitScene(gateMenu, wireMenu, xcell, ycell, this);
-    scene->setSceneRect(QRectF(0, 0, xcell, ycell));
+    scene = new CircuitScene(gateMenu, wireMenu, 400, 400, this);
+    scene->setSceneRect(QRectF(0, 0, 400, 400));
     scene->setBackgroundBrush(Qt::lightGray);
 
     //connect to configscene for selection/deselection signals
@@ -33,18 +33,29 @@ MainWindow::MainWindow(QWidget *parent)
     connect(scene, SIGNAL(itemdeSelected(QGraphicsItem*)),
                 this, SLOT(itemdeSelected(QGraphicsItem*)));
 
-    //draw the simulation cell white on the gray background
+
     cell = new QGraphicsRectItem;
-    cell->setRect(0, 0, xcell, ycell);
+    cell->setRect(0, 0, 400, 400);
     cell->setBrush(Qt::white);
     cell->setZValue(-2000);
     scene->addItem(cell);
 
-    //add slider to the right of qgraphicsview for zooming
+
     zoomSlider = new QSlider;
+    zoomSlider->setOrientation(Qt::Horizontal);
     zoomSlider->setMinimum(0);
     zoomSlider->setMaximum(500);
-    zoomSlider->setValue(200);
+    zoomSlider->setValue(250);
+
+
+
+    rotateSlider = new QSlider;
+    rotateSlider->setOrientation(Qt::Horizontal);
+    rotateSlider->setMinimum(-360);
+    rotateSlider->setMaximum(360);
+    rotateSlider->setValue(0);
+
+
 
 
     QVBoxLayout *progLayout = new QVBoxLayout;
@@ -52,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     cPEdit = new QTextEdit;
     cPEdit->setMaximumWidth(210);
+
 
     fPEdit = new QTextEdit;
     fPEdit->setMaximumWidth(210);
@@ -66,12 +78,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(progWidget);
+
+    QVBoxLayout *viewLayout = new QVBoxLayout;
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
-    layout->addWidget(view);
-    layout->addWidget(zoomSlider);
+    viewLayout->addWidget(zoomSlider);
+    viewLayout->addWidget(view);
+    viewLayout->addWidget(rotateSlider);
+    layout->addLayout(viewLayout);
+
 
     connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
+    connect(rotateSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
     setupMatrix();
 
     QWidget *widget = new QWidget;
@@ -120,6 +138,17 @@ void MainWindow::setupMatrix()
 
     QMatrix matrix;
     matrix.scale(scale, scale);
+    matrix.rotate(rotateSlider->value());
 
     view->setMatrix(matrix);
+}
+
+void MainWindow::rotateLeft()
+{
+    rotateSlider->setValue(rotateSlider->value() - 10);
+}
+
+void MainWindow::rotateRight()
+{
+    rotateSlider->setValue(rotateSlider->value() + 10);
 }

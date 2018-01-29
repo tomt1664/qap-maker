@@ -44,6 +44,8 @@ public:
 
 private slots:
     void setupMatrix();
+    void rotateLeft();
+    void rotateRight();
 
 private:
     void setupMenus();
@@ -57,6 +59,7 @@ private:
     CircuitScene *scene;
     QGraphicsView *view;
     QSlider *zoomSlider;
+    QSlider *rotateSlider;
 
     //periodic images
     int xcell; // x cell dimension

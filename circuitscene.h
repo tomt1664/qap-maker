@@ -76,7 +76,6 @@ private:
     QColor myLineColor;
     int xcell; // cell x dimension
     int ycell; // cell y dimension
-    int indx; // index for linking periodic transitions
     int gridSize;
     bool snap;
 };
