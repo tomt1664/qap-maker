@@ -49,13 +49,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-    rotateSlider = new QSlider;
-    rotateSlider->setOrientation(Qt::Horizontal);
-    rotateSlider->setMinimum(-360);
-    rotateSlider->setMaximum(360);
-    rotateSlider->setValue(0);
-
-
     QVBoxLayout *progLayout = new QVBoxLayout;
 
     QHBoxLayout *cProgBar = new QHBoxLayout;
@@ -114,14 +107,12 @@ MainWindow::MainWindow(QWidget *parent)
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
     viewLayout->addLayout(circuitBar);
-    viewLayout->addWidget(zoomSlider);
     viewLayout->addWidget(view);
-    viewLayout->addWidget(rotateSlider);
+    viewLayout->addWidget(zoomSlider);
     layout->addLayout(viewLayout);
 
 
     connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
-    connect(rotateSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
     setupMatrix();
 
     QWidget *widget = new QWidget;
@@ -170,17 +161,7 @@ void MainWindow::setupMatrix()
 
     QMatrix matrix;
     matrix.scale(scale, scale);
-    matrix.rotate(rotateSlider->value());
 
     view->setMatrix(matrix);
 }
 
-void MainWindow::rotateLeft()
-{
-    rotateSlider->setValue(rotateSlider->value() - 10);
-}
-
-void MainWindow::rotateRight()
-{
-    rotateSlider->setValue(rotateSlider->value() + 10);
-}
