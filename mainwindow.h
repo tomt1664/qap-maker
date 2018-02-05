@@ -17,6 +17,8 @@
 class CProgram;
 class FlatProgram;
 class CircuitScene;
+class R1csScene;
+class PolyPlot;
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -44,8 +46,6 @@ public:
 
 private slots:
     void setupMatrix();
-    void rotateLeft();
-    void rotateRight();
 
 private:
     void setupMenus();
@@ -57,12 +57,11 @@ private:
     //mainwindow components
     QGraphicsRectItem *cell;
     CircuitScene *scene;
+    R1csScene *r1scene;
     QGraphicsView *view;
+    QGraphicsView *r1view;
     QSlider *zoomSlider;
-
-    //periodic images
-    int xcell; // x cell dimension
-    int ycell; // y cell dimension
+    PolyPlot *pplot;
 
     QTextEdit *cProgEdit;
     QTextEdit *fProgEdit;

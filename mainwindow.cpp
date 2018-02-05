@@ -11,6 +11,8 @@
 #include "cprog.h"
 #include "flatprog.h"
 #include "circuitscene.h"
+#include "r1csscene.h"
+#include "polyplot.h"
 #include "qcustomplot.h"
 
 #include <QtWidgets>
@@ -21,26 +23,33 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     setupMenus();
-//    setupWidgets();
 
+// set up the circuit scene
     scene = new CircuitScene(gateMenu, wireMenu, 800, 800, this);
     scene->setSceneRect(QRectF(0, 0, 800, 800));
     scene->setBackgroundBrush(Qt::lightGray);
 
-    //connect to configscene for selection/deselection signals
+//connect to circuitscene for selection/deselection signals
     connect(scene, SIGNAL(itemSelected(QGraphicsItem*)),
                 this, SLOT(itemSelected(QGraphicsItem*)));
     connect(scene, SIGNAL(itemdeSelected(QGraphicsItem*)),
                 this, SLOT(itemdeSelected(QGraphicsItem*)));
 
-
-    cell = new QGraphicsRectItem;
-    cell->setRect(0, 0, 400, 400);
-    cell->setBrush(Qt::white);
-    cell->setZValue(-2000);
-    scene->addItem(cell);
+// set up the r1cs scene
+    r1scene = new R1csScene(this);
+    r1scene->setSceneRect(QRectF(0, 0, 400, 400));
+    r1scene->setBackgroundBrush(Qt::lightGray);
 
 
+//    cell = new QGraphicsRectItem;
+//    cell->setRect(0, 0, 400, 400);
+//    cell->setBrush(Qt::white);
+//    cell->setZValue(-2000);
+
+//    scene->addItem(cell);
+
+
+// create a zoom slider for the circuit scene
     zoomSlider = new QSlider;
     zoomSlider->setOrientation(Qt::Horizontal);
     zoomSlider->setMinimum(0);
@@ -48,9 +57,8 @@ MainWindow::MainWindow(QWidget *parent)
     zoomSlider->setValue(250);
 
 
-
+// program layouts and labels
     QVBoxLayout *progLayout = new QVBoxLayout;
-
     QHBoxLayout *cProgBar = new QHBoxLayout;
     QLabel *cProgLabel = new QLabel(tr("C Program"));
     cProgBar->addWidget(cProgLabel);
@@ -58,13 +66,12 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *fProgBar = new QHBoxLayout;
     QLabel *fProgLabel = new QLabel(tr("Flattened Program"));
     fProgBar->addWidget(fProgLabel);
-
     QHBoxLayout *progInputBar = new QHBoxLayout;
     QLabel *progInputLabel = new QLabel(tr("Input"));
     progInputBar->addWidget(progInputLabel);
-
     QLabel *progOutputLabel = new QLabel(tr("Ouput"));
 
+// edit boxes for the progams
     cProgEdit = new QTextEdit;
     cProgEdit->setMinimumWidth(320);
     cProgEdit->setMaximumWidth(320);
@@ -99,6 +106,7 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(progWidget);
 
+// Circuit scene layout
     QHBoxLayout *circuitBar = new QHBoxLayout;
     QLabel *circuitLabel = new QLabel(tr("Circuit"));
     circuitBar->addWidget(circuitLabel);
@@ -111,9 +119,31 @@ MainWindow::MainWindow(QWidget *parent)
     viewLayout->addWidget(zoomSlider);
     layout->addLayout(viewLayout);
 
-
     connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
     setupMatrix();
+
+// R1CS and polynomial views
+    QHBoxLayout *r1csBar = new QHBoxLayout;
+    QLabel *r1csLabel = new QLabel(tr("R1CS"));
+    r1csBar->addWidget(r1csLabel);
+
+
+    pplot = new PolyPlot;
+    QHBoxLayout *polyBar = new QHBoxLayout;
+    QLabel *polyLabel = new QLabel(tr("Polynomial"));
+    polyBar->addWidget(polyLabel);
+
+    QVBoxLayout *r1viewLayout = new QVBoxLayout;
+    r1view = new QGraphicsView(r1scene);
+    r1view->setRenderHint(QPainter::Antialiasing);
+    r1viewLayout->addLayout(r1csBar);
+    r1viewLayout->addWidget(r1view);
+    r1viewLayout->addSpacing(15);
+    r1viewLayout->addLayout(polyBar);
+    r1viewLayout->addWidget(pplot);
+
+    layout->addLayout(r1viewLayout);
+
 
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
