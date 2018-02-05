@@ -114,6 +114,8 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *viewLayout = new QVBoxLayout;
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
+    view->setFixedSize(800,800);
+    view->setSceneRect(0,0,800,800);
     viewLayout->addLayout(circuitBar);
     viewLayout->addWidget(view);
     viewLayout->addWidget(zoomSlider);
@@ -142,6 +144,7 @@ MainWindow::MainWindow(QWidget *parent)
     r1viewLayout->addLayout(polyBar);
     r1viewLayout->addWidget(pplot);
 
+    layout->addSpacing(15);
     layout->addLayout(r1viewLayout);
 
 
