@@ -74,7 +74,6 @@ private:
     QToolButton *cProgSaveButton;
     QToolButton *fProgSaveButton;
     QToolButton *cProgRunButton;
-    QToolButton *cProgRunButton;
     QToolButton *cProgFlatButton;
     QToolButton *fProgCircuitButton;
     QToolButton *inputOpenButton;

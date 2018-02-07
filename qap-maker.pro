@@ -21,3 +21,7 @@ SOURCES	    =   mainwindow.cpp \
 # install
 target.path = /home/tt200/qap-maker/
 INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
+

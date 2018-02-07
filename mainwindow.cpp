@@ -47,12 +47,36 @@ MainWindow::MainWindow(QWidget *parent)
     zoomSlider->setMaximum(500);
     zoomSlider->setValue(250);
 
-
 // program layouts and labels
+//  buttons for the program boxes
+    cProgOpenButton = new QToolButton;
+    cProgOpenButton->setIcon(QIcon(QPixmap(":/icons/folder.png")));
+    cProgOpenButton->setIconSize(QSize(20, 20));
+    cProgOpenButton->setToolTip("Open file");
+
+    cProgSaveButton = new QToolButton;
+    cProgSaveButton->setIcon(QIcon(QPixmap(":/icons/save.png")));
+    cProgSaveButton->setIconSize(QSize(20, 20));
+    cProgSaveButton->setToolTip("Save file");
+
+    cProgRunButton = new QToolButton;
+    cProgRunButton->setIcon(QIcon(QPixmap(":/icons/play.png")));
+    cProgRunButton->setIconSize(QSize(20, 20));
+    cProgRunButton->setToolTip("Run program");
+
+    cProgFlatButton = new QToolButton;
+    cProgFlatButton->setIcon(QIcon(QPixmap(":/icons/flat2.png")));
+    cProgFlatButton->setIconSize(QSize(20, 20));
+    cProgFlatButton->setToolTip("Flatten program");
+
     QVBoxLayout *progLayout = new QVBoxLayout;
     QHBoxLayout *cProgBar = new QHBoxLayout;
     QLabel *cProgLabel = new QLabel(tr("C Program"));
     cProgBar->addWidget(cProgLabel);
+    cProgBar->addWidget(cProgOpenButton);
+    cProgBar->addWidget(cProgSaveButton);
+    cProgBar->addWidget(cProgRunButton);
+    cProgBar->addWidget(cProgFlatButton);
 
     QHBoxLayout *fProgBar = new QHBoxLayout;
     QLabel *fProgLabel = new QLabel(tr("Flattened Program"));
