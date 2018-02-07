@@ -40,15 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     r1scene->setSceneRect(QRectF(0, 0, 400, 400));
     r1scene->setBackgroundBrush(Qt::lightGray);
 
-
-//    cell = new QGraphicsRectItem;
-//    cell->setRect(0, 0, 400, 400);
-//    cell->setBrush(Qt::white);
-//    cell->setZValue(-2000);
-
-//    scene->addItem(cell);
-
-
 // create a zoom slider for the circuit scene
     zoomSlider = new QSlider;
     zoomSlider->setOrientation(Qt::Horizontal);

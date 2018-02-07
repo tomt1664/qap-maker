@@ -63,10 +63,24 @@ private:
     QSlider *zoomSlider;
     PolyPlot *pplot;
 
+    //program text edit boxes
     QTextEdit *cProgEdit;
     QTextEdit *fProgEdit;
     QTextEdit *progInputEdit;
     QTextEdit *progOutputEdit;
+
+    //mainwindow buttons
+    QToolButton *cProgOpenButton;
+    QToolButton *cProgSaveButton;
+    QToolButton *fProgSaveButton;
+    QToolButton *cProgRunButton;
+    QToolButton *cProgRunButton;
+    QToolButton *cProgFlatButton;
+    QToolButton *fProgCircuitButton;
+    QToolButton *inputOpenButton;
+    QToolButton *outputSaveButton;
+    QToolButton *circuitSaveButton;
+    QToolButton *circuitImageButton;
 
     QMenu *gateMenu;
     QMenu *wireMenu;
