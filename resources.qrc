@@ -4,5 +4,9 @@
         <file>icons/save.png</file>
         <file>icons/play.png</file>
         <file>icons/flat2.png</file>
+        <file>icons/circuit.png</file>
+        <file>icons/image.png</file>
+        <file>icons/settings.png</file>
+        <file>icons/export.png</file>
     </qresource>
 </RCC>

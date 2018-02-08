@@ -76,10 +76,12 @@ private:
     QToolButton *cProgRunButton;
     QToolButton *cProgFlatButton;
     QToolButton *fProgCircuitButton;
-    QToolButton *inputOpenButton;
-    QToolButton *outputSaveButton;
+    QToolButton *fProgOpenButton;
+    QToolButton *fProgRunButton;
     QToolButton *circuitSaveButton;
     QToolButton *circuitImageButton;
+    QToolButton *circuitSettingsButton;
+    QToolButton *circuitR1CSButton;
 
     QMenu *gateMenu;
     QMenu *wireMenu;
