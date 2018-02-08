@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     zoomSlider->setOrientation(Qt::Horizontal);
     zoomSlider->setMinimum(0);
     zoomSlider->setMaximum(500);
-    zoomSlider->setValue(250);
+    zoomSlider->setValue(200);
 
 // program layouts and labels
     QFont labelFont("Helvetica", 12, QFont::Bold);
@@ -165,7 +165,7 @@ MainWindow::MainWindow(QWidget *parent)
     circuitImageButton = new QToolButton;
     circuitImageButton->setIcon(QIcon(QPixmap(":/icons/image.png")));
     circuitImageButton->setIconSize(QSize(20, 20));
-    circuitImageButton->setToolTip("Save circuit");
+    circuitImageButton->setToolTip("Export image");
 
     circuitSettingsButton = new QToolButton;
     circuitSettingsButton->setIcon(QIcon(QPixmap(":/icons/settings.png")));
@@ -240,17 +240,26 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::setupMenus()
 {
-    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
+    QMenu *progMenu = menuBar()->addMenu(tr("&Program"));
 
-    QAction *openAction = fileMenu->addAction(tr("&Open..."));
+    QAction *openAction = progMenu->addAction(tr("&Open..."));
     openAction->setShortcuts(QKeySequence::Open);
 
-    QAction *exitAction = fileMenu->addAction(tr("E&xit"));
+    QAction *saveAction = progMenu->addAction(tr("&Save..."));
+    openAction->setShortcuts(QKeySequence::Save);
+
+    QAction *runAction = progMenu->addAction(tr("&Run"));
+    QAction *flattenAction = progMenu->addAction(tr("&Flatten"));
+
+    QAction *exitAction = progMenu->addAction(tr("E&xit"));
     exitAction->setShortcuts(QKeySequence::Quit);
 
-    QMenu *gameMenu = menuBar()->addMenu(tr("&Game"));
+    QMenu *circuitMenu = menuBar()->addMenu(tr("&Circuit"));
 
-    QAction *restartAction = gameMenu->addAction(tr("&Restart"));
+    QAction *createAction = circuitMenu->addAction(tr("&Create"));
+    QAction *csaveAction = circuitMenu->addAction(tr("&Save"));
+    QAction *exportAction = circuitMenu->addAction(tr("&Export"));
+    QAction *settingsAction = circuitMenu->addAction(tr("&Settings..."));
 
 //    connect(openAction, SIGNAL(triggered()), this, SLOT(openImage()));
 //    connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));

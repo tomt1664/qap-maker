@@ -59,8 +59,8 @@ PolyPlot::PolyPlot()
 
     QVBoxLayout *plotLayout = new QVBoxLayout;
     plotLayout->addWidget(customPlot);
-    plotLayout->addSpacing(30);
-    plotLayout->addLayout(buttonLayout);
+//    plotLayout->addSpacing(30);
+//    plotLayout->addLayout(buttonLayout);
     plotLayout->addSpacing(10);
 
     setLayout(plotLayout);
