@@ -46,6 +46,8 @@ public:
 
 private slots:
     void setupMatrix();
+    void openCFile();
+    void saveCFile();
 
 private:
     void setupMenus();
@@ -82,6 +84,10 @@ private:
     QToolButton *circuitImageButton;
     QToolButton *circuitSettingsButton;
     QToolButton *circuitR1CSButton;
+
+    //actions
+    QAction *openCFileAction;
+    QAction *saveCFileAction;
 
     QMenu *gateMenu;
     QMenu *wireMenu;

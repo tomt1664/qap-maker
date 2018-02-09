@@ -244,6 +244,7 @@ void MainWindow::setupMenus()
 
     QAction *openAction = progMenu->addAction(tr("&Open..."));
     openAction->setShortcuts(QKeySequence::Open);
+    connect(openAction, SIGNAL(triggered()), this, SLOT(openCFile()));
 
     QAction *saveAction = progMenu->addAction(tr("&Save..."));
     openAction->setShortcuts(QKeySequence::Save);
@@ -257,27 +258,23 @@ void MainWindow::setupMenus()
     QMenu *circuitMenu = menuBar()->addMenu(tr("&Circuit"));
 
     QAction *createAction = circuitMenu->addAction(tr("&Create"));
-    QAction *csaveAction = circuitMenu->addAction(tr("&Save"));
-    QAction *exportAction = circuitMenu->addAction(tr("&Export"));
+    QAction *csaveAction = circuitMenu->addAction(tr("&Save..."));
+    QAction *exportAction = circuitMenu->addAction(tr("&Export..."));
     QAction *settingsAction = circuitMenu->addAction(tr("&Settings..."));
+
+    QMenu *qapMenu = menuBar()->addMenu(tr("&QAP"));
+
+    QAction *qapCreateAction = qapMenu->addAction(tr("&Create"));
+    QAction *qapExportAction = qapMenu->addAction(tr("&Export..."));
+
+    QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
+
+    QAction *aboutAction = helpMenu->addAction(tr("&About"));
+    QAction *guideAction = helpMenu->addAction(tr("&Guide..."));
 
 //    connect(openAction, SIGNAL(triggered()), this, SLOT(openImage()));
 //    connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 //    connect(restartAction, SIGNAL(triggered()), this, SLOT(setupPuzzle()));
-}
-
-void MainWindow::setupWidgets()
-{
-    QFrame *frame = new QFrame;
-    QVBoxLayout *frameLayout = new QVBoxLayout(frame);
-    flatProg = new FlatProgram();
-
-    cProg = new CProgram();
-
-
-    frameLayout->addWidget(cProg);
-    frameLayout->addWidget(flatProg);
-    setCentralWidget(frame);
 }
 
 void MainWindow::setupMatrix()
@@ -290,3 +287,18 @@ void MainWindow::setupMatrix()
     view->setMatrix(matrix);
 }
 
+//function to open C file dialog and read in the program
+void MainWindow::openCFile()
+{
+    QString inputfile = QFileDialog::getOpenFileName(this, "Open XML File",
+                                                    QString(),
+                                                    "XML Files (*.xml)");
+}
+
+//function to open file dialog and save the c program
+void MainWindow::saveCFile()
+{
+    QString ouputfile = QFileDialog::getOpenFileName(this, "Open XML File",
+                                                    QString(),
+                                                    "XML Files (*.xml)");
+}
