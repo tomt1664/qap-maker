@@ -48,10 +48,12 @@ private slots:
     void setupMatrix();
     void openCFile();
     void saveCFile();
+    void about();
 
 private:
     void setupMenus();
     void setupWidgets();
+    void createActions();
 
     CProgram *cProg;
     FlatProgram *flatProg;

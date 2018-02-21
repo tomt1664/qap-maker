@@ -318,9 +318,253 @@ void MainWindow::about()
                "<br> "
                "<br>Tom Trevethan"
                "<br>Email: <a href=\"mailto:tptrevethan@googlemail.com>\">tptrevethan@googlemail.com</a>"
-               "<br>2016"
                "</p>").arg(__TIMESTAMP__));
 }
+
+//open c program and load
+void MainWindow::openCProg()
+{
+    QString inputfile = QFileDialog::getOpenFileName(this, "Open C Source File",
+                                                    QString(),
+                                                    "C Source Files (*.c)");
+
+    if (!inputfile.isNull()) {
+
+        clearCell();
+
+        QFile file(inputfile);
+
+        if (!file.open(QFile::ReadOnly | QFile::Text)) {
+            QMessageBox msgbox;
+            msgbox.setText("Error reading source file");
+            msgbox.exec();
+            return;
+        }
+
+        if (!inputfile.isNull()) {
+            QString line;
+    
+            atoms.clear(); //clear configuration arrays
+            xatmpos.clear();
+            yatmpos.clear();
+    
+            nitems = 0;
+    
+            QFile file(inputfile);
+            if (!file.open(QFile::ReadOnly)) {
+                throw std::bad_exception();
+            }
+            QTextStream input(&file);
+    
+            line = input.readLine();
+            bool ok;
+            nitems = line.toInt(&ok,10);
+    
+            if(!ok)
+            {
+                QMessageBox msgbox;
+                msgbox.setText("Error reading XYZ file");
+                msgbox.exec();
+                return;
+            }
+    
+            line = input.readLine();
+            QStringList cell = line.split(" ",QString::SkipEmptyParts);
+            if(cell.size() == 3)
+            {
+                bounds[0] = 0.0;
+                bounds[1] = 100*cell[0].toFloat(&ok);
+                bounds[2] = 0.0;
+                bounds[3] = 100*cell[1].toFloat(&ok);
+            }
+    
+            for(int i = 0; i < nitems; i++)
+            {
+                line = input.readLine();
+                QStringList coords = line.split(" ",QString::SkipEmptyParts);
+                if(coords.size() != 4)
+                {
+                    QMessageBox msgbox;
+                    msgbox.setText("Error reading XYZ file");
+                    msgbox.exec();
+                    return;
+                }
+                float xap =  100*coords[1].toFloat(&ok);
+                float yap =  100*coords[2].toFloat(&ok);
+    
+                xatmpos.append(xap);
+                yatmpos.append(yap);
+            }
+    
+            populateScene(); // re-draw scene with new coordinates
+            gView->setScene(scene);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+        xmlReader.readNext();
+
+
+        while(!xmlReader.atEnd()) {
+            xmlReader.readNext();
+            if(xmlReader.isStartElement()) {
+                QString name = xmlReader.name().toString();
+                if(name == "Cell") {
+                    QXmlStreamAttributes attributes = xmlReader.attributes();
+                    foreach(QXmlStreamAttribute attribute, attributes) {
+                        QString aname = attribute.name().toString();
+                        QString avalue = attribute.value().toString();
+                        if(aname == "xDim") {
+                            xcell = avalue.toInt();
+                        }
+                        if(aname == "yDim") {
+                            ycell = avalue.toInt();
+                        }
+                    }
+                    //re-draw the system cell
+                    scene->changeCell(xcell,ycell);
+                    scene->setSceneRect(QRectF(0, 0, xcell, ycell));
+                    cell->setRect(0, 0, xcell, ycell);
+                    perarea->setRect(-xcell-10, -ycell-10, 3*xcell+20, 3*ycell+20);
+                    redrawCells();
+                }
+                if(name == "Site") {
+                    QXmlStreamAttributes attributes = xmlReader.attributes();
+                    int xcrd,ycrd,occt;
+                    double ent,m1,m2,m3,m4,m5,m6 = 0.0;
+                    int sum = 0;
+                    foreach(QXmlStreamAttribute attribute, attributes) {
+                        QString aname = attribute.name().toString();
+                        QString avalue = attribute.value().toString();
+                        if(aname == "xCoord") {
+                            xcrd = avalue.toInt();
+                            sum++;
+                        }
+                        if(aname == "yCoord") {
+                            ycrd = avalue.toInt();
+                            sum++;
+                        }
+                        if(aname == "Occ") {
+                            occt = avalue.toInt();
+                            sum++;
+                        }
+                        if(aname == "En") {
+                            ent = avalue.toDouble();
+                            sum++;
+                        }
+                        if(aname == "Mod1") m1 = avalue.toDouble();
+                        if(aname == "Mod2") m2 = avalue.toDouble();
+                        if(aname == "Mod3") m3 = avalue.toDouble();
+                        if(aname == "Mod4") m4 = avalue.toDouble();
+                        if(aname == "Mod5") m5 = avalue.toDouble();
+                        if(aname == "Mod6") m6 = avalue.toDouble();
+                        }
+                        if(sum != 4) {
+                            QMessageBox msgbox;
+                            msgbox.setText("Error. Malformed system file: Site attributes missing");
+                            msgbox.exec();
+                            return;
+                    }
+                    scene->addSite(occt,ent,xcrd,ycrd,0,0,0,m1,m2,m3,m4,m5,m6);
+                }
+                if(name == "Transition") {
+                    QXmlStreamAttributes attributes = xmlReader.attributes();
+                    int sxcrd,sycrd,excrd,eycrd,idt;
+                    double ent,fpf,bpf;
+                    int sum = 0;
+                    foreach(QXmlStreamAttribute attribute, attributes) {
+                        QString aname = attribute.name().toString();
+                        QString avalue = attribute.value().toString();
+                        if(aname == "xStart") {
+                            sxcrd = avalue.toInt();
+                            sum++;
+                        }
+                        if(aname == "yStart") {
+                            sycrd = avalue.toInt();
+                            sum++;
+                        }
+                        if(aname == "xEnd") {
+                            excrd = avalue.toInt();
+                            sum++;
+                        }
+                        if(aname == "yEnd") {
+                            eycrd = avalue.toInt();
+                            sum++;
+                        }
+                        if(aname == "En") {
+                            ent = avalue.toDouble();
+                            sum++;
+                        }
+                        if(aname == "startPF") {
+                            fpf = avalue.toDouble();
+                            sum++;
+                        }
+                        if(aname == "endPF") {
+                            bpf = avalue.toDouble();
+                            sum++;
+                        }
+                        if(aname == "ID") {
+                            idt = avalue.toInt();
+                            sum++;
+                        }
+                    }
+                    if(sum != 8) {
+                        QMessageBox msgbox;
+                        msgbox.setText("Error. Malformed system file: Trans attributes missing");
+                        msgbox.exec();
+                        return;
+                    }
+                    Site *startItem;
+                    Site *endItem;
+                    bool foundStart = false;
+                    bool foundEnd = false;
+                    foreach(QGraphicsItem *item, scene->items()) {
+                        if(item->type() == Site::Type ) {
+                            Site *sItem = qgraphicsitem_cast<Site *>(item);
+                            int xsp = sItem->scenePos().x();
+                            int ysp = sItem->scenePos().y();
+                            if(xsp == sxcrd && ysp == sycrd) {
+                                startItem = sItem;
+                                foundStart = true;
+                            }
+                            if(xsp == excrd && ysp == eycrd) {
+                                foundEnd = true;
+                                endItem = sItem;
+                            }
+                        }
+                    }
+                    if(!foundStart || !foundEnd) {
+                        QMessageBox msgbox;
+                        msgbox.setText("Error. Malformed system file: hanging transition");
+                        msgbox.exec();
+                        return;
+                    }
+                    scene->addTrans(startItem,endItem,ent,idt,fpf,bpf);
+                }
+            }
+        }
+
+    }
+}
+
+
 
 void MainWindow::createActions()
 {
