@@ -17,6 +17,7 @@
 
 #include <QtWidgets>
 #include <QDebug>
+#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -238,6 +239,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     setCentralWidget(widget);
     setWindowTitle(tr("QAPMaker"));
+
+    //declare program
+    cProg = new CProgram;
 }
 
 void MainWindow::setupMenus()
@@ -249,7 +253,7 @@ void MainWindow::setupMenus()
     connect(openAction, SIGNAL(triggered()), this, SLOT(openCFile()));
 
     QAction *saveAction = progMenu->addAction(tr("&Save..."));
-    openAction->setShortcuts(QKeySequence::Save);
+    saveAction->setShortcuts(QKeySequence::Save);
 
     QAction *runAction = progMenu->addAction(tr("&Run"));
     QAction *flattenAction = progMenu->addAction(tr("&Flatten"));
@@ -274,7 +278,7 @@ void MainWindow::setupMenus()
     QAction *aboutAction = helpMenu->addAction(tr("&About"));
     QAction *guideAction = helpMenu->addAction(tr("&Guide..."));
 
-//    connect(openAction, SIGNAL(triggered()), this, SLOT(openImage()));
+    connect(saveAction, SIGNAL(triggered()), this, SLOT(saveCFile()));
 //    connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 //    connect(restartAction, SIGNAL(triggered()), this, SLOT(setupPuzzle()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -290,20 +294,10 @@ void MainWindow::setupMatrix()
     view->setMatrix(matrix);
 }
 
-//function to open C file dialog and read in the program
-void MainWindow::openCFile()
-{
-    QString inputfile = QFileDialog::getOpenFileName(this, "Open XML File",
-                                                    QString(),
-                                                    "XML Files (*.xml)");
-}
-
 //function to open file dialog and save the c program
 void MainWindow::saveCFile()
 {
-    QString ouputfile = QFileDialog::getOpenFileName(this, "Open XML File",
-                                                    QString(),
-                                                    "XML Files (*.xml)");
+    cProg->printSource();
 }
 
 //about program box
@@ -318,9 +312,47 @@ void MainWindow::about()
                "<br> "
                "<br>Tom Trevethan"
                "<br>Email: <a href=\"mailto:tptrevethan@googlemail.com>\">tptrevethan@googlemail.com</a>"
-               "<br>2016"
                "</p>").arg(__TIMESTAMP__));
 }
+
+//open c program and load
+void MainWindow::openCFile()
+{
+    QString inputfile = QFileDialog::getOpenFileName(this, "Open C Source File",
+                                                    QString(),
+                                                    "C Source Files (*.c)");
+
+    if (!inputfile.isNull()) {
+
+        QFile file(inputfile);
+
+        if (!file.open(QFile::ReadOnly | QFile::Text)) {
+            QMessageBox msgbox;
+            msgbox.setText("Error reading source file");
+            msgbox.exec();
+            return;
+        }
+
+        QTextStream tStream(&file);
+        QStringList source;
+        while (true)
+        {
+            QString line = tStream.readLine();
+            if (line.isNull())
+                break;
+            else
+                source.append(line);
+        }
+
+        //load into prog
+//        cProg->loadSource(source);
+        foreach (QString line, source) {
+                cProgEdit->append(line);
+            }
+    }
+}
+
+
 
 void MainWindow::createActions()
 {

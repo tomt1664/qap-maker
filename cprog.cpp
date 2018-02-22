@@ -9,25 +9,19 @@
 
 #include "cprog.h"
 
-#include <QMainWindow>
-#include <QWidget>
-#include <QtWidgets>
+#include <QDebug>
 
-CProgram::CProgram(QWidget *parent)
-    : QWidget(parent)
+CProgram::CProgram()
 {
 
-    QVBoxLayout *cLayout = new QVBoxLayout;
+}
 
-    cProgEdit = new QTextEdit;
-    cProgEdit->setReadOnly(true);
-    cProgEdit->setBackgroundRole(QPalette::NoRole);
-    cProgEdit->setMaximumWidth(210);
-    cProgEdit->append("Hello");
+void CProgram::loadSource(QString inSource)
+{
+    source = inSource;
+}
 
-    cLayout->addWidget(cProgEdit);
-
-    QWidget *cWidget = new QWidget;
-    cWidget->setLayout(cLayout);
-
+void CProgram::printSource()
+{
+    qDebug() << qPrintable(source);
 }

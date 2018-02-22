@@ -10,27 +10,20 @@
 #ifndef CPROG
 #define CPROG
 
-#include <QWidget>
-#include <QTextEdit>
+#include <QString>
 
-class CProgram : public QWidget  // QWidget class for the main c program field
+class CProgram  // class for the main c program
 {
-    Q_OBJECT
-
-    QSize size() const Q_DECL_OVERRIDE;
-
 
 public:
-
-    CProgram(QWidget *parent = 0);
-
-public slots:
+    CProgram();
+    void loadSource(QString inSource);
+    void printSource();
 
 protected:
 
 private:
-
-    QTextEdit *cProgEdit;
+    QString source;
 };
 
 #endif // CPROG
