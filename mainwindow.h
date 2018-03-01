@@ -54,8 +54,6 @@ private slots:
 
 private:
     void setupMenus();
-    void setupWidgets();
-    void createActions();
 
     CProgram *cProg;
     FlatProgram *flatProg;

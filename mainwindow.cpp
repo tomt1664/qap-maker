@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 //  initial set-up
     setupMenus();
-    createActions();
 
 // set up the circuit scene
     scene = new CircuitScene(gateMenu, wireMenu, 600, 800, this);
@@ -349,13 +348,6 @@ void MainWindow::openCFile()
                 cProgEdit->append(line);
             }
     }
-}
-
-
-
-void MainWindow::createActions()
-{
-
 }
 
 void MainWindow::flattenCProg()
