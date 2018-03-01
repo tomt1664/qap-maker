@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     cProgOpenButton->setIcon(QIcon(QPixmap(":/icons/folder.png")));
     cProgOpenButton->setIconSize(QSize(20, 20));
     cProgOpenButton->setToolTip("Open file");
+    connect(cProgOpenButton, SIGNAL(clicked()),this,SLOT(openCFile()));
 
     cProgSaveButton = new QToolButton;
     cProgSaveButton->setIcon(QIcon(QPixmap(":/icons/save.png")));
@@ -279,8 +280,6 @@ void MainWindow::setupMenus()
     QAction *guideAction = helpMenu->addAction(tr("&Guide..."));
 
     connect(saveAction, SIGNAL(triggered()), this, SLOT(saveCFile()));
-//    connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
-//    connect(restartAction, SIGNAL(triggered()), this, SLOT(setupPuzzle()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 }
 
@@ -355,6 +354,16 @@ void MainWindow::openCFile()
 
 
 void MainWindow::createActions()
+{
+
+}
+
+void MainWindow::flattenCProg()
+{
+
+}
+
+void MainWindow::runCProg()
 {
 
 }
