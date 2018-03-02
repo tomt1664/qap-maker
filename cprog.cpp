@@ -16,12 +16,13 @@ CProgram::CProgram()
 
 }
 
-void CProgram::loadSource(QString inSource)
+void CProgram::loadSource(QStringList inSource)
 {
     source = inSource;
 }
 
-void CProgram::printSource()
+QStringList CProgram::outSource()
 {
-    qDebug() << qPrintable(source);
+    return source;
 }
+

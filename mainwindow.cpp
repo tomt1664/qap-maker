@@ -295,7 +295,39 @@ void MainWindow::setupMatrix()
 //function to open file dialog and save the c program
 void MainWindow::saveCFile()
 {
-    cProg->printSource();
+    QString savefile = QFileDialog::getSaveFileName(this, "Save C source",
+                                                    QString(),
+                                                    "C Files (*.c)");
+
+    if (!savefile.isNull()) {
+
+        QFile sfile(savefile);
+        if (sfile.open(QFile::WriteOnly | QFile::Truncate))
+        {
+            QTextStream out(&sfile);
+            QStringList outProg;
+            outProg = cProg->outSource();
+            foreach (QString line, outProg) {
+                            out << line << "\n";
+                        }
+
+            sfile.close();
+        } else
+        {
+            QMessageBox msgbox;
+            msgbox.setText("Error writing C file");
+            msgbox.exec();
+            return;
+        }
+    } else
+    {
+        QMessageBox msgbox;
+        msgbox.setText("Error writing C file");
+        msgbox.exec();
+        return;
+    }
+
+
 }
 
 //about program box
@@ -343,7 +375,7 @@ void MainWindow::openCFile()
         }
 
         //load into prog
-//        cProg->loadSource(source);
+        cProg->loadSource(source);
         foreach (QString line, source) {
                 cProgEdit->append(line);
             }

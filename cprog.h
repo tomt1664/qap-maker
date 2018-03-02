@@ -11,19 +11,20 @@
 #define CPROG
 
 #include <QString>
+#include <QStringList>
 
 class CProgram  // class for the main c program
 {
 
 public:
     CProgram();
-    void loadSource(QString inSource);
-    void printSource();
+    void loadSource(QStringList inSource);
+    QStringList outSource();
 
 protected:
 
 private:
-    QString source;
+    QStringList source;
 };
 
 #endif // CPROG
