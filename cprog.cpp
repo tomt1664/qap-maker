@@ -42,7 +42,7 @@ QString CProgram::runProgram()
 
     foreach(int outValue, inputs)
     {
-        output += outValue;
+        output += QString::number(outValue) + " ";
     }
 
     return output;

@@ -68,6 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
     cProgRunButton->setIcon(QIcon(QPixmap(":/icons/play.png")));
     cProgRunButton->setIconSize(QSize(20, 20));
     cProgRunButton->setToolTip("Run program");
+    connect(cProgRunButton, SIGNAL(clicked()),this,SLOT(runCProg()));
 
     cProgFlatButton = new QToolButton;
     cProgFlatButton->setIcon(QIcon(QPixmap(":/icons/flat2.png")));
@@ -391,5 +392,10 @@ void MainWindow::flattenCProg()
 
 void MainWindow::runCProg()
 {
+    // get the input
+    QString getInput = progInputEdit->toPlainText();
+    cProg->loadInput(getInput);
 
+    QString getOutput = cProg->runProgram();
+    progOutputEdit->append(getOutput);
 }
