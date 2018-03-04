@@ -26,3 +26,24 @@ QStringList CProgram::outSource()
     return source;
 }
 
+void CProgram::loadInput(QString inputString)
+{
+    QStringList intList = inputString.split(" ",QString::SkipEmptyParts);
+
+    foreach(QString stringInt, intList)
+    {
+        inputs.append(stringInt.toInt());
+    }
+}
+
+QString CProgram::runProgram()
+{
+    QString output;
+
+    foreach(int outValue, inputs)
+    {
+        output += outValue;
+    }
+
+    return output;
+}

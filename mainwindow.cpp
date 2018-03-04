@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     cProgSaveButton->setIcon(QIcon(QPixmap(":/icons/save.png")));
     cProgSaveButton->setIconSize(QSize(20, 20));
     cProgSaveButton->setToolTip("Save file");
+    connect(cProgSaveButton, SIGNAL(clicked()),this,SLOT(saveCFile()));
 
     cProgRunButton = new QToolButton;
     cProgRunButton->setIcon(QIcon(QPixmap(":/icons/play.png")));

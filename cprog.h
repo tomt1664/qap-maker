@@ -12,6 +12,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QList>
 
 class CProgram  // class for the main c program
 {
@@ -20,11 +21,16 @@ public:
     CProgram();
     void loadSource(QStringList inSource);
     QStringList outSource();
+    void loadInput(QString inputString);
+    QString runProgram();
 
 protected:
 
 private:
     QStringList source;
+    QList<int> inputs;
+    QList<int> outputs;
+    QList<int> variables;
 };
 
 #endif // CPROG
