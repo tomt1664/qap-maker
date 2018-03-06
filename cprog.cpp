@@ -40,12 +40,12 @@ void CProgram::loadInput(QString inputString)
 //function to parse the input program and interpret it
 QString CProgram::runProgram()
 {
-    QRegExp separator(" |,");
+    QRegExp separator(" |,|{|}");
 
     //check input/output structs
     QString line = source[0];
     QStringList lineItems = line.split(separator);
-    if(lineItems.size() < 6) return "Error: input struct incomplete";
+    if(lineItems.size() < 4) return "Error: input struct incomplete";
     if(lineItems[0] != "struct" && lineItems[1] != "in") return "Error: missing input struct";
     ninputs = 0;
     for(int i=0;i<(lineItems.size()-1);i++)
@@ -54,6 +54,20 @@ QString CProgram::runProgram()
         {
             ninputs++;
             inputVars.append(lineItems[i+1]);
+        }
+    }
+
+    line = source[1];
+    lineItems = line.split(separator);
+    if(lineItems.size() < 4) return "Error: output struct incomplete";
+    if(lineItems[0] != "struct" && lineItems[1] != "out") return "Error: missing ouput struct";
+    noutputs = 0;
+    for(int i=0;i<(lineItems.size()-1);i++)
+    {
+        if(lineItems[i] == "int")
+        {
+            noutputs++;
+            outputVars.append(lineItems[i+1]);
         }
     }
 
