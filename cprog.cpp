@@ -33,27 +33,31 @@ void CProgram::loadInput(QString inputString)
 
     foreach(QString stringInt, intList)
     {
-        inputs.append(stringInt.toInt());
+        inputVals.append(stringInt.toInt());
     }
 }
 
 //function to parse the input program and interpret it
 QString CProgram::runProgram()
 {
-    QString output2;
+    QRegExp separator(" |,");
 
-    //check input and ouput structs
-    foreach(QString line, source)
+    //check input/output structs
+    QString line = source[0];
+    QStringList lineItems = line.split(separator);
+    if(lineItems.size() < 6) return "Error: input struct incomplete";
+    if(lineItems[0] != "struct" && lineItems[1] != "in") return "Error: missing input struct";
+    ninputs = 0;
+    for(int i=0;i<(lineItems.size()-1);i++)
     {
-        output2 = line;
+        if(lineItems[i] == "int")
+        {
+            ninputs++;
+            inputVars.append(lineItems[i+1]);
+        }
     }
 
     QString output;
 
-    foreach(int outValue, inputs)
-    {
-        output += QString::number(outValue) + " ";
-    }
-
-    return QString::number(source.size());
+    return QString::number(ninputs);
 }

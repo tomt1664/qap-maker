@@ -28,8 +28,10 @@ protected:
 
 private:
     QStringList source;
-    QList<int> inputs;
-    QList<int> outputs;
+    QList<int> inputVals;
+    QList<int> outputVals;
+    QStringList inputVars;
+    QStringList outputVars;
     QList<int> variables;
     int ninputs;
     int noutputs;

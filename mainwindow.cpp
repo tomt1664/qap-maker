@@ -400,6 +400,7 @@ void MainWindow::runCProg()
     QString getInput = progInputEdit->toPlainText();
     cProg->loadInput(getInput);
 
+    progOutputEdit->clear();
     QString getOutput = cProg->runProgram();
     progOutputEdit->append(getOutput);
 }
