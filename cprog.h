@@ -31,6 +31,8 @@ private:
     QList<int> inputs;
     QList<int> outputs;
     QList<int> variables;
+    int ninputs;
+    int noutputs;
 };
 
 #endif // CPROG

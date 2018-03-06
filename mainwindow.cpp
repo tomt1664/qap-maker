@@ -377,7 +377,6 @@ void MainWindow::openCFile()
         }
 
         cProgEdit->setCurrentFont(QFont("Courier",10));
-        //load into prog
         cProg->loadSource(source);
         foreach (QString line, source) {
                 cProgEdit->append(line);
@@ -392,6 +391,11 @@ void MainWindow::flattenCProg()
 
 void MainWindow::runCProg()
 {
+    //update source
+    QString sourceString = cProgEdit->toPlainText();
+    QStringList sourceLines = sourceString.split("\n");
+    cProg->loadSource(sourceLines);
+
     // get the input
     QString getInput = progInputEdit->toPlainText();
     cProg->loadInput(getInput);

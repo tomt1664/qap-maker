@@ -18,6 +18,7 @@ CProgram::CProgram()
 
 void CProgram::loadSource(QStringList inSource)
 {
+    source.clear();
     source = inSource;
 }
 
@@ -36,8 +37,17 @@ void CProgram::loadInput(QString inputString)
     }
 }
 
+//function to parse the input program and interpret it
 QString CProgram::runProgram()
 {
+    QString output2;
+
+    //check input and ouput structs
+    foreach(QString line, source)
+    {
+        output2 = line;
+    }
+
     QString output;
 
     foreach(int outValue, inputs)
@@ -45,5 +55,5 @@ QString CProgram::runProgram()
         output += QString::number(outValue) + " ";
     }
 
-    return output;
+    return QString::number(source.size());
 }
