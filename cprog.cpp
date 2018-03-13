@@ -71,6 +71,24 @@ QString CProgram::runProgram()
         }
     }
 
+    //read in compute function
+    line = source[2];
+    if(line != "void compute(struct In, struct Out)") return "Error: missing compute function";
+    line = source[3];
+    if(line != "{") "Error: malformed compute function";
+
+    //loop over compute sequence
+    for(int i = 1; i<200; i++)
+    {
+        if(i+3 >= source.size()) return "Error: compute function missing closing brace";
+        line = source[i+3];
+        if(line == "}") break;
+
+        lineItems = line.split(separator);
+    }
+
+
+
     QString output;
 
     return QString::number(ninputs);
