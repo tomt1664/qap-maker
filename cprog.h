@@ -32,7 +32,8 @@ private:
     QList<int> outputVals;
     QStringList inputVars;
     QStringList outputVars;
-    QList<int> variables;
+    QStringList progVars;
+    QList<int> progVals;
     int ninputs;
     int noutputs;
 };

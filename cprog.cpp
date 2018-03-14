@@ -40,7 +40,8 @@ void CProgram::loadInput(QString inputString)
 //function to parse the input program and interpret it
 QString CProgram::runProgram()
 {
-    QRegExp separator(" |,|{|}");
+    QRegExp separator(" |,|{|}|;");
+    QRegExp number("\\d*");
 
     //check input/output structs
     QString line = source[0];
@@ -85,6 +86,41 @@ QString CProgram::runProgram()
         if(line == "}") break;
 
         lineItems = line.split(separator);
+
+        if(lineItems[0] == "int")
+        {
+            if(lineItems.size()<2) return "Error: invalid integer declaration";
+            for(int j=1;j<(lineItems.size()-1);j++)
+            {
+                progVars.append(lineItems[j]);
+            }
+        } else if(progVars.contains(lineItems[0]) || inputVars.contains(lineItems[0]) || outputVars.contains(lineItems[0]))
+        {
+            if(lineItems[1] != "=") return "Error: invalid arithmetic operation";
+
+            //assign integer values
+            if(number.exactMatch(lineItems[2]))
+            {
+
+            }
+
+
+        } else
+        {
+            return "Error: undeclaired variable";
+        }
+
+
+
+        for(int i=0;i<(lineItems.size()-1);i++)
+        {
+            if(lineItems[1] == "int")
+            {
+                noutputs++;
+                outputVars.append(lineItems[i+1]);
+            }
+        }
+
     }
 
 
