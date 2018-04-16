@@ -18,8 +18,8 @@
 CircuitScene::CircuitScene(QMenu *gateMenu, QMenu *wireMenu, int xc, int yc, QObject *parent)
     : QGraphicsScene(parent), gridSize(20)
 {
-    mySiteMenu = gateMenu;
-    myTransMenu = wireMenu;
+    myGateMenu = gateMenu;
+    myWireMenu = wireMenu;
     myMode = InsertUSite;
     line = 0;
     myItemColor = Qt::white;

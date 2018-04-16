@@ -57,6 +57,7 @@ QString CProgram::runProgram()
             inputVars.append(lineItems[i+1]);
         }
     }
+    if(inputVals.size() != inputVars.size()) return "Error: input data doesn't match input struct";
 
     line = source[1];
     lineItems = line.split(separator);
@@ -76,7 +77,7 @@ QString CProgram::runProgram()
     line = source[2];
     if(line != "void compute(struct In, struct Out)") return "Error: missing compute function";
     line = source[3];
-    if(line != "{") "Error: malformed compute function";
+    if(line != "{") return "Error: malformed compute function";
 
     //loop over compute sequence
     for(int i = 1; i<200; i++)
@@ -87,14 +88,27 @@ QString CProgram::runProgram()
 
         lineItems = line.split(separator);
 
+        //read in variable declaration
         if(lineItems[0] == "int")
         {
-            if(lineItems.size()<2) return "Error: invalid integer declaration";
-            for(int j=1;j<(lineItems.size()-1);j++)
+            if(lineItems.size() != 4 || lineItems[2] != "=") return "Error: invalid integer declaration";
+
+            progVars.append(lineItems[1]);
+            progVals.append(lineItems[2].toInt());
+        }
+        //read in program statements
+        else {
+            if(lineItems[1] != "=") return "Error: invalid arithmetic operation";
+
+            if(progVars.contains(lineItems[0]) || inputVars.contains(lineItems[0]) || outputVars.contains(lineItems[0]))
             {
-                progVars.append(lineItems[j]);
+
             }
-        } else if(progVars.contains(lineItems[0]) || inputVars.contains(lineItems[0]) || outputVars.contains(lineItems[0]))
+
+
+
+
+            if(progVars.contains(lineItems[0]) || inputVars.contains(lineItems[0]) || outputVars.contains(lineItems[0]))
         {
             if(lineItems[1] != "=") return "Error: invalid arithmetic operation";
 
@@ -119,6 +133,7 @@ QString CProgram::runProgram()
                 noutputs++;
                 outputVars.append(lineItems[i+1]);
             }
+        }
         }
 
     }

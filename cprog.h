@@ -33,6 +33,7 @@ private:
     QStringList inputVars;
     QStringList outputVars;
     QStringList progVars;
+    QStringList progStatements;
     QList<int> progVals;
     int ninputs;
     int noutputs;

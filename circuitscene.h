@@ -33,24 +33,6 @@ public:
 
     explicit CircuitScene(QMenu *gateMenu, QMenu *wireMenu,int xc, int yc, QObject *parent = 0);
 
-//    void addSite(bool ostate, double en, double xc, double yc, int sindx, int xrep, int yrep,
-//             double m1, double m2, double m3, double m4, double m5, double m6);
-//    void addTrans(Site *myStartItem, Site *myEndItem, double nbar, int id, double startPF, double endPF);
-//    void addTransPair(Site *myStartItem1, Site *myEndItem1,Site *myStartItem2, Site *myEndItem2, double nbar);
-
-//    int getGridSize() const { return this->gridSize; }
-//    bool getSnap() { return this->snap; }
-//    void setSnap(bool dosnap) { snap = dosnap; }
-//    void changeCell(int xcelln, int ycelln) { xcell = xcelln; ycell = ycelln; }
-
-//    void setTransMin1(double energy);
-//    void setTransMin2(double energy);
-//    void setTransBar(double energy);
-//    void setStartMod(int nn, double energy);
-//    void setEndMod(int nn, double energy);
-//    void setStartPreFac(double pf);
-//    void setEndPreFac(double pf);
-
 public slots:
 //    void setMode(Mode mode);
 
@@ -66,8 +48,8 @@ protected:
 private:
     bool isItemChange(int type);
 
-    QMenu *mySiteMenu;
-    QMenu *myTransMenu;
+    QMenu *myGateMenu;
+    QMenu *myWireMenu;
     Mode myMode;
     bool leftButtonDown;
     QPointF startPoint;
